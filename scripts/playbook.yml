@@ -8,6 +8,7 @@
     - name: install OS packages for development
       dnf: name={{ item }} state=latest
       with_items:
+        - dnf-plugins-core
         - git-all
         - memcached
         - postgresql-devel
@@ -66,4 +67,21 @@
       lineinfile: dest=~/.bashrc line='export RBENV_VERSION="{{ ruby_version }}"'
     - name: install ruby version {{ ruby_version }}
       shell: rbenv install -s {{ ruby_version }}
+- hosts: all
+  become: true
+  tasks:
+    - name: verify if we need to reboot
+      command: dnf needs-restarting
+      register: reboot_needed
+    - name: reboot machine
+      shell: shutdown -t 5 -r now "Rebooting as the appliance needs restarting"
+      async: 0
+      poll: 0
+      ignore_errors: yes
+      when: reboot_needed.stdout != ""
+    - name: waiting for server to come back
+      local_action: wait_for host={{ inventory_hostname }}
+                    state=started
+      become: false
+      when: reboot_needed.stdout != ""
 ...
