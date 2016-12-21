@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "fedora/24-cloud-base"
+  config.vm.box = "fedora/25-cloud-base"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -96,7 +96,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", privileged: false, inline: <<-EOF
     echo "Vagrant Box provisioned!"
     echo "Local server address is http://localhost:3000"
-    echo "Please do $vagrant ssh and cd to /manageiq"
+    echo "Please do $ vagrant ssh and cd to /manageiq"
     echo "and do $ bin/setup to finish configuration"
     echo "Server can be started with $ bundle exec rake evm:start"
   EOF
