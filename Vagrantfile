@@ -60,15 +60,15 @@ Vagrant.configure(2) do |config|
   # information on available options.
 
   config.vm.provider "virtualbox" do |vb|
-     vb.memory = 4096
+     vb.memory = 6144
      vb.cpus = 2
      vb.name = "manageiq-dev"
   end
 
-  config.vm.hostname = "vagrant-dev"
+  config.vm.hostname = "miqdev"
 
   # There are bidirectional synchronization types that should be preferred if available
-  config.vm.synced_folder "~/workspace/manageiq/", "/manageiq", type: "rsync"
+  config.vm.synced_folder "~/workspace/manageiq/", "/home/vagrant/manageiq", type: "rsync"
 
   # Install prerequisites for Ansible
    config.vm.provision "shell", path: "scripts/initiation.sh"
@@ -95,9 +95,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", privileged: false, inline: <<-EOF
     echo "Vagrant Box provisioned!"
-    echo "Local server address is http://localhost:3000"
-    echo "Please do $ vagrant ssh and cd to /manageiq"
+    echo "Please do $ vagrant ssh, your code will be in ~/manageiq"
     echo "and do $ bin/setup to finish configuration"
-    echo "Server can be started with $ bundle exec rake evm:start"
+    echo "Server can be started with $ bin/rails evm:start"
+    echo "Local server address is http://localhost:3000"
+    echo "There is additional information in http://manageiq.org/docs/guides/developer_setup"
   EOF
 end
