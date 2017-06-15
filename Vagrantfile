@@ -97,7 +97,7 @@ Vagrant.configure(2) do |config|
     echo "Vagrant Box provisioned!"
     echo "Please do $ vagrant ssh, your code will be in ~/manageiq"
     echo "and do $ bin/setup to finish configuration"
-    echo "Server can be started with $ bin/rails evm:start"
+    echo "Server can be started with $ bundle exec rake evm:start"
     echo "Local server address is http://localhost:3000"
     echo "There is additional information in http://manageiq.org/docs/guides/developer_setup"
   EOF

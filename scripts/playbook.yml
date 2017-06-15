@@ -58,7 +58,7 @@
       postgresql_user: name=root password=smartvm state=present role_attr_flags=SUPERUSER
 - hosts: all
   vars:
-    ruby_version: "2.4.1"
+    ruby_version: "2.3.1"
   become: false
   tasks:
     - name: git clone rbenv
