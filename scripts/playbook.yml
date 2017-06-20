@@ -2,7 +2,9 @@
 - hosts: all
   become: true
   tasks:
-    - hostname: name=manageiq-dev
+    - name: change hostname
+      hostname:
+        name: miqdev
     - name: install OS elements
       dnf: name=* state=latest
     - name: install OS packages for development
@@ -29,11 +31,14 @@
         - cmake
         - python-psycopg2
         - libselinux-python
-        - git
         - bash-completion
         - vim
-    - name: install bower package manager
-      npm: name=bower global=yes
+    - name: install npm packages needed
+      npm: name={{ item }} global=yes
+      with_items:
+        - bower
+        - yarn
+        - webpack
     - name: enable memcached and ensure is running
       service: name=memcached state=started enabled=yes
     - name: Initiate database
@@ -80,8 +85,7 @@
       ignore_errors: yes
       when: reboot_needed.stdout != ""
     - name: waiting for server to come back
-      local_action: wait_for host={{ inventory_hostname }}
-                    state=started
-      become: false
-      when: reboot_needed.stdout != ""
+      wait_for_connection:
+        delay: 60
+        timeout: 300
 ...

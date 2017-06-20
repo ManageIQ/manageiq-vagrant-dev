@@ -1,3 +1,13 @@
 /playbook.retry
 /scripts/playbook.retry
 /.vagrant
+/.idea
+/.code
+*.cmd
+*.pyc
+*.sln
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.swp
+
