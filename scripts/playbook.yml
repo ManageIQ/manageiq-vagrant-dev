@@ -38,7 +38,6 @@
       with_items:
         - bower
         - yarn
-        - gulp-cli
         - webpack
     - name: enable memcached and ensure is running
       service: name=memcached state=started enabled=yes
