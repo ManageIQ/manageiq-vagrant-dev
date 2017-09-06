@@ -20,7 +20,7 @@ The Vagrant file will create a VM using fedora25-cloud as a basis and proceed to
 - Install python (needed by Ansible) so the Ansible playbook.yml can be run
 - Configure the OS and install everything needed for development
 - Configure the database, start and enable it and add the user needed
-- Configure rbenv and install ruby 2.4.1
+- Configure rbenv and install ruby 2.3.1
 - Verify if reboot is necessary and then reboot the machine
 
 ## Limitations ##
