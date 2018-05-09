@@ -7,14 +7,17 @@
         name: miqdev
     - name: install OS elements
       dnf: name=* state=latest
+    - name: add PostgreSQL repo
+      dnf:
+        name: https://download.postgresql.org/pub/repos/yum/9.5/fedora/fedora-27-x86_64/pgdg-fedora95-9.5-5.noarch.rpm
     - name: install OS packages for development
       dnf: name={{ item }} state=latest
       with_items:
         - dnf-plugins-core
         - git-all
         - memcached
-        - postgresql-devel
-        - postgresql-server
+        - postgresql95-devel
+        - postgresql95-server
         - bzip2 
         - libffi-devel
         - readline-devel
@@ -27,7 +30,7 @@
         - gcc-c++
         - libcurl-devel
         - npm
-        - openssl-devel
+        - compat-openssl10-devel
         - cmake
         - python-psycopg2
         - libselinux-python
@@ -42,17 +45,20 @@
     - name: enable memcached and ensure is running
       service: name=memcached state=started enabled=yes
     - name: Initiate database
-      command: service postgresql initdb
-               creates=/var/lib/pgsql/data/postgresql.conf
+      command: /usr/pgsql-9.5/bin/postgresql95-setup initdb
+      args:
+        creates: /var/lib/pgsql/9.5/data/postgresql.conf
     - name: configure pg_hba.conf
-      replace: dest=/var/lib/pgsql/data/pg_hba.conf 
-                  regexp='^(local\s*\w*\s*\w*\s*)(peer)'
-                  replace='\1trust' 
-                  backup=yes
+      replace:
+        dest: /var/lib/pgsql/9.5/data/pg_hba.conf
+        regexp: '^(local\s*\w*\s*\w*\s*)(peer)'
+        replace: '\1trust'
+        backup: yes
     - name: Start PostgreSQL and enable at boot
-      service: name=postgresql
-               enabled=yes
-               state=started
+      service:
+        name: postgresql-9.5
+        enabled: yes
+        state: started
     - name: create user in postgres
       postgresql_user: name=root password=smartvm state=present role_attr_flags=SUPERUSER
 - hosts: all
