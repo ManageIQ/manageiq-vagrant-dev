@@ -8,11 +8,11 @@ The script is currently designed in the following way:
 - The script makes some suppositions
   - Vagrant is installed
   - Ansible is installed in your host machine
-  - Virtualbox is installed
+  - Virtualbox or other virtualization solution is installed
 
 ## The process ##
 
-The Vagrant file will create a VM using fedora25-cloud as a basis and proceed to configure it for development:
+The Vagrant file will create a VM using fedora31-cloud as a basis and proceed to configure it for development:
 - Configure the VM with 6 GB and 2 CPU
 - Open port 3000 for UI management
 - Open port 4000 for API management
@@ -20,7 +20,7 @@ The Vagrant file will create a VM using fedora25-cloud as a basis and proceed to
 - Install python (needed by Ansible) so the Ansible playbook.yml can be run
 - Configure the OS and install everything needed for development
 - Configure the database, start and enable it and add the user needed
-- Configure rbenv and install ruby 2.3.1
+- Configure rbenv and install ruby 2.6.5
 - Verify if reboot is necessary and then reboot the machine
 
 ## Limitations ##
