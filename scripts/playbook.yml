@@ -18,7 +18,7 @@
         - bzip2 
         - libffi-devel
         - readline-devel
-        - libxml
+        - libxml2
         - libxml2-devel
         - libxslt-devel
         - patch
@@ -29,8 +29,8 @@
         - npm
         - openssl-devel
         - cmake
-        - python-psycopg2
-        - libselinux-python
+        - python3-psycopg2
+        - python3-libselinux
         - bash-completion
         - vim
     - name: install npm packages needed
@@ -57,7 +57,7 @@
       postgresql_user: name=root password=smartvm state=present role_attr_flags=SUPERUSER
 - hosts: all
   vars:
-    ruby_version: "2.3.1"
+    ruby_version: "2.6.6"
   become: false
   tasks:
     - name: git clone rbenv

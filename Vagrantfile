@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "fedora/25-cloud-base"
+  config.vm.box = "centos/8"
+  config.vm.box_url = "http://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.1.1911-20200113.3.x86_64.vagrant-virtualbox.box"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -68,7 +69,8 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "miqdev"
 
   # There are bidirectional synchronization types that should be preferred if available
-  config.vm.synced_folder "~/workspace/manageiq/", "/home/vagrant/manageiq", type: "rsync"
+  config.vm.synced_folder "../manageiq", "/home/vagrant/manageiq", type: "virtualbox"
+  config.vm.synced_folder "../manageiq-ui-classic", "/home/vagrant/manageiq-ui-classic", type: "virtualbox"
 
   # Install prerequisites for Ansible
    config.vm.provision "shell", path: "scripts/initiation.sh"

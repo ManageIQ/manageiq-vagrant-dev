@@ -1,2 +1,2 @@
 #!/bin/bash
-dnf -y install python python2-dnf
+dnf -y install python3
