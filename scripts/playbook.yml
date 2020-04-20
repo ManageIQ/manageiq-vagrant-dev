@@ -28,9 +28,10 @@
         - libcurl-devel
         - npm
         - openssl-devel
+        - make
         - cmake
         - python-psycopg2
-        - libselinux-python
+        - libselinux
         - bash-completion
         - vim
     - name: install npm packages needed
@@ -57,7 +58,7 @@
       postgresql_user: name=root password=smartvm state=present role_attr_flags=SUPERUSER
 - hosts: all
   vars:
-    ruby_version: "2.3.1"
+    ruby_version: "2.6.5"
   become: false
   tasks:
     - name: git clone rbenv
@@ -79,10 +80,8 @@
       command: dnf needs-restarting
       register: reboot_needed
     - name: reboot machine
-      shell: shutdown -t 5 -r now "Rebooting as the appliance needs restarting"
-      async: 0
-      poll: 0
-      ignore_errors: yes
+      reboot:
+        reboot_timeout: 180
       when: reboot_needed.stdout != ""
     - name: waiting for server to come back
       wait_for_connection:
