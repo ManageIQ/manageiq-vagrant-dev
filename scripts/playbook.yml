@@ -18,7 +18,6 @@
         - bzip2 
         - libffi-devel
         - readline-devel
-        - libxml
         - libxml2-devel
         - libxslt-devel
         - patch
@@ -72,7 +71,7 @@
     - name: ruby version to be used
       lineinfile: dest=~/.bashrc line='export RBENV_VERSION="{{ ruby_version }}"'
     - name: install ruby version {{ ruby_version }}
-      shell: rbenv install -s {{ ruby_version }}
+      shell: source ~/.bashrc; rbenv install -s {{ ruby_version }}
 - hosts: all
   become: true
   tasks:
